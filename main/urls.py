@@ -17,12 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from users.router import router as users_router
+from django.conf import settings
+from django.conf.urls.static import static
+from projects.router import routers as projects_router
 
 api_urlpatterns = [
-     path('users/', include(users_router.urls)),
+    path('users/', include(users_router.urls)),
+    path('projects/', include(projects_router.urls)),
 ]
 
 urlpatterns = [
     path('api/', include(api_urlpatterns)),
     path('admin/', admin.site.urls),
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
